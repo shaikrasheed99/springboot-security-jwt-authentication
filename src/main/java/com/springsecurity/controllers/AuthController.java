@@ -25,11 +25,11 @@ public class AuthController {
         String message = "user has created successfully";
         String response = new SuccessResponse()
                 .status("success")
-                .code(HttpStatus.OK)
+                .code(HttpStatus.CREATED)
                 .message(message)
                 .data(null)
                 .convertToJson();
 
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
