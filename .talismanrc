@@ -1,4 +1,8 @@
 fileignoreconfig:
 - filename: src/main/resources/application.properties
   checksum: d4b6e4cf775589dc87e112f992ed87034dddcaf27d7a57d52146fd273a8c7cd5
+- filename: src/main/java/com/springsecurity/models/User.java
+  checksum: 092831dd57513382318b382300980c5aa685bd8b9be64aa54640d255432cd5ba
+- filename: src/main/java/com/springsecurity/helpers/request/SignupRequest.java
+  checksum: 7be3899b5da041001781a5441e2648bcfc14010ce48d2d1cea171048106bff2f
 version: ""
