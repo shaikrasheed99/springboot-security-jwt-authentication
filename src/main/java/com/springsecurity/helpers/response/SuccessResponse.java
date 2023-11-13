@@ -25,7 +25,7 @@ public class SuccessResponse {
         return this;
     }
 
-    public SuccessResponse data(String data) {
+    public SuccessResponse data(Object data) {
         this.data = data;
         return this;
     }
