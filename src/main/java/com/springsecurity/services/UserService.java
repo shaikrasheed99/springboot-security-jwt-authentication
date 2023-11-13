@@ -6,6 +6,8 @@ import com.springsecurity.models.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     @Autowired
@@ -21,5 +23,14 @@ public class UserService {
         );
 
         userRepository.save(user);
+    }
+
+    public User getUser(String username) throws Exception {
+        Optional<User> user = userRepository.findById(username);
+        if (user.isEmpty()) {
+            throw new Exception("user not found");
+        }
+
+        return user.get();
     }
 }

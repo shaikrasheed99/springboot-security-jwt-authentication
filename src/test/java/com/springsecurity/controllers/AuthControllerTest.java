@@ -1,6 +1,7 @@
 package com.springsecurity.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.springsecurity.helpers.request.LoginRequest;
 import com.springsecurity.helpers.request.SignupRequest;
 import com.springsecurity.models.User;
 import com.springsecurity.models.UserRepository;
@@ -70,6 +71,30 @@ class AuthControllerTest {
         ).andExpect(
                 MockMvcResultMatchers
                         .jsonPath("$.code").value("CREATED")
+        );
+    }
+
+    @Test
+    void shouldBeAbleToLoginUser() throws Exception {
+        LoginRequest loginRequest = new LoginRequest(
+                "test_username",
+                "test_password"
+        );
+        String loginRequestJson = new ObjectMapper().writeValueAsString(loginRequest);
+        ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders
+                        .post("/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(loginRequestJson)
+        );
+
+        result.andExpect(
+                MockMvcResultMatchers
+                        .status()
+                        .isOk()
+        ).andExpect(
+                MockMvcResultMatchers
+                        .jsonPath("$.code").value("OK")
         );
     }
 }

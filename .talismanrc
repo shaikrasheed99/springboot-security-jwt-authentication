@@ -7,4 +7,6 @@ fileignoreconfig:
   checksum: 7be3899b5da041001781a5441e2648bcfc14010ce48d2d1cea171048106bff2f
 - filename: src/main/java/com/springsecurity/services/JwtService.java
   checksum: 3adeffaa886162e25b4625578c253c0ec8cde93cba1b354bd97b6604484b63fb
+- filename: src/main/java/com/springsecurity/helpers/request/LoginRequest.java
+  checksum: 2054b14cdb8edb09613f2d8913fd9dae291b260ef5bea2f404b005c9af565588
 version: ""

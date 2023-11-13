@@ -1,8 +1,10 @@
 package com.springsecurity.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.springsecurity.helpers.request.LoginRequest;
 import com.springsecurity.helpers.request.SignupRequest;
 import com.springsecurity.helpers.response.SuccessResponse;
+import com.springsecurity.models.User;
 import com.springsecurity.services.JwtService;
 import com.springsecurity.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +44,25 @@ public class AuthController {
                 .convertToJson();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) throws Exception {
+        User user = userService.getUser(loginRequest.getUsername());
+
+        String token = jwtService.generateToken(user.getUsername(), user.getRole());
+
+        HashMap<Object, Object> data = new HashMap<>();
+        data.put("token", token);
+
+        String message = "user has logged in successfully";
+        String response = new SuccessResponse()
+                .status("success")
+                .code(HttpStatus.OK)
+                .message(message)
+                .data(data)
+                .convertToJson();
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

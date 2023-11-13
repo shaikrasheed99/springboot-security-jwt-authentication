@@ -10,6 +10,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -22,6 +26,7 @@ class UserServiceTest {
     public UserService userService;
 
     public SignupRequest signupRequest;
+    public User user;
 
     @BeforeEach
     public void setUp() {
@@ -32,6 +37,14 @@ class UserServiceTest {
                 "test_firstname",
                 "test_lastname"
         );
+
+        user = new User(
+                signupRequest.getUsername(),
+                signupRequest.getPassword(),
+                signupRequest.getRole(),
+                signupRequest.getFirstname(),
+                signupRequest.getLastname()
+        );
     }
 
     @Test
@@ -41,5 +54,23 @@ class UserServiceTest {
         userService.addUser(signupRequest);
 
         verify(userRepository, times(1)).save(any(User.class));
+    }
+
+    @Test
+    void shouldAbleToGetUserDetails() throws Exception {
+        when(userRepository.findById(any(String.class))).thenReturn(Optional.ofNullable(user));
+
+        User userDetails = userService.getUser(user.getUsername());
+
+        assertEquals(userDetails.getUsername(), user.getUsername());
+        verify(userRepository, times(1)).findById(any(String.class));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenUserNotFoundWithUsername() throws Exception {
+        when(userRepository.findById(any(String.class))).thenReturn(Optional.empty());
+
+        assertThrows(Exception.class, () -> userService.getUser(user.getUsername()));
+        verify(userRepository, times(1)).findById(any(String.class));
     }
 }
