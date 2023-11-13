@@ -1,9 +1,9 @@
 package com.springsecurity.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.springsecurity.helpers.request.LoginRequest;
-import com.springsecurity.helpers.request.SignupRequest;
-import com.springsecurity.helpers.response.SuccessResponse;
+import com.springsecurity.dto.request.LoginRequest;
+import com.springsecurity.dto.request.SignupRequest;
+import com.springsecurity.dto.response.SuccessResponse;
 import com.springsecurity.models.User;
 import com.springsecurity.services.JwtService;
 import com.springsecurity.services.UserService;

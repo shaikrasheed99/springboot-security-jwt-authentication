@@ -1,6 +1,6 @@
 package com.springsecurity.services;
 
-import com.springsecurity.helpers.request.SignupRequest;
+import com.springsecurity.dto.request.SignupRequest;
 import com.springsecurity.models.User;
 import com.springsecurity.models.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

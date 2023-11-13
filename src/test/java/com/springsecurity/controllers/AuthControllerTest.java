@@ -1,8 +1,8 @@
 package com.springsecurity.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springsecurity.helpers.request.LoginRequest;
-import com.springsecurity.helpers.request.SignupRequest;
+import com.springsecurity.dto.request.LoginRequest;
+import com.springsecurity.dto.request.SignupRequest;
 import com.springsecurity.models.User;
 import com.springsecurity.models.UserRepository;
 import org.junit.jupiter.api.AfterEach;

@@ -1,4 +1,4 @@
-package com.springsecurity.helpers.request;
+package com.springsecurity.dto.request;
 
 public class SignupRequest {
     private String username;
