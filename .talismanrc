@@ -1,6 +1,6 @@
 fileignoreconfig:
 - filename: src/main/resources/application.properties
-  checksum: d4b6e4cf775589dc87e112f992ed87034dddcaf27d7a57d52146fd273a8c7cd5
+  checksum: bb299f543c6c838f3bb3c30b5cec6d7796a00040cb54aff9c47db74914315873
 - filename: src/main/java/com/springsecurity/models/User.java
   checksum: 092831dd57513382318b382300980c5aa685bd8b9be64aa54640d255432cd5ba
 - filename: src/main/java/com/springsecurity/helpers/request/SignupRequest.java
@@ -9,4 +9,8 @@ fileignoreconfig:
   checksum: 3adeffaa886162e25b4625578c253c0ec8cde93cba1b354bd97b6604484b63fb
 - filename: src/main/java/com/springsecurity/helpers/request/LoginRequest.java
   checksum: 2054b14cdb8edb09613f2d8913fd9dae291b260ef5bea2f404b005c9af565588
+- filename: src/main/java/com/springsecurity/security/UserDetailsImpl.java
+  checksum: 4768815e94ffaa3126879d2f2e4c1344828d4a0a0fce26c1271e7924757ac80a
+- filename: src/main/java/com/springsecurity/security/JwtAuthFilter.java
+  checksum: 92bddeaa7c3140070e7d8943fe22b862c8f23a0117fbc8d7d32217a7f09b578f
 version: ""
