@@ -10,6 +10,8 @@ import com.springsecurity.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,16 +28,18 @@ public class AuthController {
     @Autowired
     public JwtService jwtService;
 
+    @Autowired
+    public AuthenticationManager authenticationManager;
+
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody SignupRequest signupRequest) throws JsonProcessingException {
         userService.addUser(signupRequest);
 
         String token = jwtService.generateToken(signupRequest.getUsername(), signupRequest.getRole());
-
         HashMap<Object, Object> data = new HashMap<>();
         data.put("token", token);
-
         String message = "user has created successfully";
+
         String response = new SuccessResponse()
                 .status("success")
                 .code(HttpStatus.CREATED)
@@ -48,14 +52,19 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) throws Exception {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsername(),
+                        loginRequest.getPassword()
+                )
+        );
+
         User user = userService.getUser(loginRequest.getUsername());
-
         String token = jwtService.generateToken(user.getUsername(), user.getRole());
-
         HashMap<Object, Object> data = new HashMap<>();
         data.put("token", token);
-
         String message = "user has logged in successfully";
+
         String response = new SuccessResponse()
                 .status("success")
                 .code(HttpStatus.OK)

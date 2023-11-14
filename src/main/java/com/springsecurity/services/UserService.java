@@ -4,6 +4,7 @@ import com.springsecurity.dto.request.SignupRequest;
 import com.springsecurity.models.User;
 import com.springsecurity.models.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,10 +14,13 @@ public class UserService {
     @Autowired
     public UserRepository userRepository;
 
+    @Autowired
+    public PasswordEncoder passwordEncoder;
+
     public void addUser(SignupRequest signupRequest) {
         User user = new User(
                 signupRequest.getUsername(),
-                signupRequest.getPassword(),
+                passwordEncoder.encode(signupRequest.getPassword()),
                 signupRequest.getFirstname(),
                 signupRequest.getLastname(),
                 signupRequest.getRole()
