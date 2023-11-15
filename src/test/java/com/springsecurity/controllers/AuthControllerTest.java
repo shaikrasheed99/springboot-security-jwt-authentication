@@ -12,6 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -76,10 +81,19 @@ class AuthControllerTest {
 
     @Test
     void shouldBeAbleToLoginUser() throws Exception {
-        LoginRequest loginRequest = new LoginRequest(
-                "test_username",
-                "test_password"
+        String signupRequestJson = new ObjectMapper().writeValueAsString(signupRequest);
+        mockMvc.perform(
+                MockMvcRequestBuilders
+                        .post("/auth/signup")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(signupRequestJson)
         );
+
+        LoginRequest loginRequest = new LoginRequest(
+                signupRequest.getUsername(),
+                signupRequest.getPassword()
+        );
+
         String loginRequestJson = new ObjectMapper().writeValueAsString(loginRequest);
         ResultActions result = mockMvc.perform(
                 MockMvcRequestBuilders

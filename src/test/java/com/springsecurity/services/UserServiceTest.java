@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -21,6 +22,9 @@ import static org.mockito.Mockito.*;
 class UserServiceTest {
     @Mock
     public UserRepository userRepository;
+
+    @Mock
+    public PasswordEncoder passwordEncoder;
 
     @InjectMocks
     public UserService userService;
@@ -50,6 +54,7 @@ class UserServiceTest {
     @Test
     void shouldAbleToSaveUserDetails() {
         when(userRepository.save(any(User.class))).thenReturn(null);
+        when(passwordEncoder.encode(any(String.class))).thenReturn("hashedPassword");
 
         userService.addUser(signupRequest);
 
