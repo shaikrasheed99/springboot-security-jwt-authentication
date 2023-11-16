@@ -13,4 +13,6 @@ fileignoreconfig:
   checksum: 4768815e94ffaa3126879d2f2e4c1344828d4a0a0fce26c1271e7924757ac80a
 - filename: src/main/java/com/springsecurity/security/JwtAuthFilter.java
   checksum: 92bddeaa7c3140070e7d8943fe22b862c8f23a0117fbc8d7d32217a7f09b578f
+- filename: README.md
+  checksum: e1743c06b305b49bd10581a4574a2beb5f669375da37092f9f7be5af50f18f33
 version: ""
