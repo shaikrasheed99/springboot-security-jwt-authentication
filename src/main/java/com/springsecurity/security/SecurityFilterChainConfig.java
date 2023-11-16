@@ -20,6 +20,7 @@ public class SecurityFilterChainConfig {
                 csrf.disable()
         ).authorizeHttpRequests(authorize ->
                 authorize.requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/users").hasRole("admin")
                         .anyRequest().authenticated()
         ).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

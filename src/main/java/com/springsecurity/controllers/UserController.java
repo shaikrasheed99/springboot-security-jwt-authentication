@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -38,6 +39,23 @@ public class UserController {
         HashMap<Object, Object> data = new HashMap<>();
         data.put("user", user);
         String message = "fetched user details successfully!!";
+
+        String response = new SuccessResponse()
+                .status("success")
+                .code(HttpStatus.OK)
+                .message(message)
+                .data(data)
+                .convertToJson();
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping()
+    public ResponseEntity<?> users(Principal principal) throws Exception {
+        List<User> users = userService.getAllUsers();
+        HashMap<Object, Object> data = new HashMap<>();
+        data.put("users", users);
+        String message = "fetched users details successfully!!";
 
         String response = new SuccessResponse()
                 .status("success")
