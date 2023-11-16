@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> users(Principal principal) throws Exception {
+    public ResponseEntity<?> users() throws Exception {
         List<User> users = userService.getAllUsers();
         HashMap<Object, Object> data = new HashMap<>();
         data.put("users", users);

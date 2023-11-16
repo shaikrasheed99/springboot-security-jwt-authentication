@@ -27,23 +27,34 @@ class UserControllerTest {
     private JwtService jwtService;
 
     private User user;
+    private User adminUser;
 
     @BeforeEach
     public void setUp() {
         user = new User(
                 "test_username",
                 "test_password",
-                "test_role",
                 "test_firstname",
-                "test_lastname"
+                "test_lastname",
+                "ROLE_user"
+        );
+
+        adminUser = new User(
+                "test_admin_username",
+                "test_password",
+                "test_firstname",
+                "test_lastname",
+                "ROLE_admin"
         );
 
         userRepository.save(user);
+        userRepository.save(adminUser);
     }
 
     @AfterEach
     public void tearDown() {
         userRepository.deleteById(user.getUsername());
+        userRepository.deleteById(adminUser.getUsername());
     }
 
     @Test
@@ -84,6 +95,43 @@ class UserControllerTest {
         ).andExpect(
                 MockMvcResultMatchers
                         .jsonPath("$.code").value("FORBIDDEN")
+        );
+    }
+
+    @Test
+    void shouldBeAbleToReturnAllUsersDetailsWhenUserIsAdmin() throws Exception {
+        String token = jwtService.generateToken(adminUser.getUsername(), adminUser.getRole());
+
+        ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders
+                        .get("/users")
+                        .header("Authorization", "Bearer " + token)
+        );
+
+        result.andExpect(
+                MockMvcResultMatchers
+                        .status()
+                        .isOk()
+        ).andExpect(
+                MockMvcResultMatchers
+                        .jsonPath("$.code").value("OK")
+        );
+    }
+
+    @Test
+    void shouldNotBeAbleToReturnAllUsersDetailsWhenUserIsNotAdmin() throws Exception {
+        String token = jwtService.generateToken(user.getUsername(), user.getRole());
+
+        ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders
+                        .get("/users")
+                        .header("Authorization", "Bearer " + token)
+        );
+
+        result.andExpect(
+                MockMvcResultMatchers
+                        .status()
+                        .isForbidden()
         );
     }
 }

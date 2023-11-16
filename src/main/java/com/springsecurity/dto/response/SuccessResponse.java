@@ -30,6 +30,10 @@ public class SuccessResponse {
         return this;
     }
 
+    public Object getData() {
+        return data;
+    }
+
     public String convertToJson() throws JsonProcessingException {
         return new ObjectMapper().writeValueAsString(this);
     }

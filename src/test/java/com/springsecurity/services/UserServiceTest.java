@@ -11,6 +11,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -77,5 +80,15 @@ class UserServiceTest {
 
         assertThrows(Exception.class, () -> userService.getUser(user.getUsername()));
         verify(userRepository, times(1)).findById(any(String.class));
+    }
+
+    @Test
+    void shouldAbleToGetAllUsers() throws Exception {
+        when(userRepository.findAll()).thenReturn(Collections.singletonList(user));
+
+        List<User> users = userService.getAllUsers();
+
+        assertEquals(users.size(), 1);
+        verify(userRepository, times(1)).findAll();
     }
 }

@@ -46,9 +46,9 @@ class AuthControllerTest {
         User user = new User(
                 signupRequest.getUsername(),
                 signupRequest.getPassword(),
-                signupRequest.getRole(),
                 signupRequest.getFirstname(),
-                signupRequest.getLastname()
+                signupRequest.getLastname(),
+                signupRequest.getRole()
         );
 
         userRepository.save(user);
